@@ -46,6 +46,7 @@ public class FormItemController {
         //선택하지 않고 폼을 전송하면 open이라는 필드 자체가 서버로 전송되지 않아 null임
         //스프링 타입 컨버터가 이 기능을 수행한다.
         //HTML에서 HIDDEN 타입의 _open value on인 태그를 만들면, open이 체크되지 않았을때 false로 전송됨
+        //타임리프의 필드를 사용하면 이게 자동 생성됨
 
         Item savedItem = itemRepository.save(item);
         redirectAttributes.addAttribute("itemId", savedItem.getId());
