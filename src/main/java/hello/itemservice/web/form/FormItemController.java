@@ -9,7 +9,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 @Slf4j
 @Controller
@@ -42,6 +44,7 @@ public class FormItemController {
     @PostMapping("/add")
     public String addItem(@ModelAttribute Item item, RedirectAttributes redirectAttributes) {
         log.info("item.open={}", item.getOpen());
+        log.info("item.regions={}", item.getRegions());
         //체크박스 체크하면 HTML FORM에서 open=on 이라는 값이 넘어가고, 스프링에서는 이 'on'이라는 문자를 true로 변환해준다
         //선택하지 않고 폼을 전송하면 open이라는 필드 자체가 서버로 전송되지 않아 null임
         //스프링 타입 컨버터가 이 기능을 수행한다.
@@ -67,5 +70,19 @@ public class FormItemController {
         return "redirect:/form/items/{itemId}";
     }
 
+    /**
+     * ModelAttribute의 특별한 사용법
+     * 메소드에 ModelAttribute 어노테이션을 사용하면
+     * 이 컨트롤러에서 어떤 메소드를 호출하든 return값을 항상 모델에 담아줌
+     * @return
+     */
+    @ModelAttribute("regions")
+    public Map<String, String> regions() {
+        Map<String, String> regions = new LinkedHashMap<>();
+        regions.put("SEOUL", "서울");
+        regions.put("BUSAN", "부산");
+        regions.put("JEJU", "제주");
+        return regions;
+    }
 }
 
